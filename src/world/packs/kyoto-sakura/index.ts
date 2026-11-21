@@ -159,7 +159,7 @@ export const kyotoSakuraPack: EarthRegionPack = {
 
       obstacles: {
         boulderAssets: ['mossy_boulder_a', 'mossy_boulder_b', 'sunken_canoe', 'floating_barrel'],
-        diveArchAssets: ['torii_gate', 'stone_footbridge', 'willow_overhang'],
+        diveArchAssets: ['willow_overhang', 'fallen_log_arch'],
         jumpLogAssets: ['giant_lily_pad', 'mossy_step_stones', 'driftwood_roots', 'cattail_reeds'],
         obstacleDensity: 0.95,
         chuteBias: 0.38,

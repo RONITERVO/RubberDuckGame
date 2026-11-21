@@ -157,7 +157,7 @@ export const volcanicGorgePack: EarthRegionPack = {
 
       obstacles: {
         boulderAssets: ['lava_rock', 'basalt_columns', 'river_snag_stump', 'floating_barrel'],
-        diveArchAssets: ['obsidian_arch', 'stone_footbridge'],
+        diveArchAssets: ['fallen_log_arch'],
         jumpLogAssets: ['driftwood_roots', 'mossy_step_stones'],
         obstacleDensity: 1.22,
         chuteBias: 0.68,

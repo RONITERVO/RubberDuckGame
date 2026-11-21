@@ -107,6 +107,10 @@ export interface WaterwayChainLeg {
   endS: number;
   /** Physical arc-length of this leg on Mini-Earth (world units). */
   lengthU: number;
+  /** True real-planet arc-length before Jet-Stream connector compression. */
+  realLengthU?: number;
+  /** Destination junction's region ID (for fast scenic connector transitions). */
+  toRegionId?: string;
   /** True when this leg is an intercontinental connector ocean strait. */
   isConnector: boolean;
   /** True when this leg is a smooth single-track regional return arc back to headwaters. */
@@ -115,9 +119,20 @@ export interface WaterwayChainLeg {
   locked: boolean;
   /** Continuous vertical elevation offset (0 on connected Earth waterways). */
   elevOffset: number;
+  /** Local ENU frame anchored at this leg's start point for exact rigid planetary geometry. */
+  geoOriginFrame?: LocalTangentFrame;
+  /** Local 3D world position where this leg attaches flush to the previous leg. */
+  worldAnchorPos?: Vec3;
+  /** Rigid 2D yaw rotation (radians) aligning this leg's ENU tangent to previous leg exit. */
+  yawAlignRad?: number;
+  /** Running heading (radians, atan2(dx, dz)) during compressed jet-stream connector steps. */
+  connectorHeading?: number;
   /** Precomputed loop spline LUT (only populated when `isReturnLoop === true`). */
   returnLut?: ReturnLoopPoint[];
 }
+
+/** Playable 3D length (world units, ~3.8s at jet-stream speed) for intercontinental connector straits. */
+const CONNECTOR_PLAYABLE_LEN = 92.0;
 
 /**
  * Local 3D spline preview for the alternate unchosen branch at an upcoming physical
@@ -623,36 +638,10 @@ export class RiverSpline implements RiverProvider {
     anchorNewPos?: Vec3,
   ): Vec3 {
     if (anchorOldPos && anchorNewPos) {
-      const rx = localPos.x - anchorOldPos.x;
-      const ry = localPos.y - anchorOldPos.y;
-      const rz = localPos.z - anchorOldPos.z;
-
-      // Express relative offset in world sphere Cartesian basis via prevFrame
-      const sx =
-        prevFrame.east.x * rx + prevFrame.up.x * ry + prevFrame.south.x * rz;
-      const sy =
-        prevFrame.east.y * rx + prevFrame.up.y * ry + prevFrame.south.y * rz;
-      const sz =
-        prevFrame.east.z * rx + prevFrame.up.z * ry + prevFrame.south.z * rz;
-
-      // Project into new localFrame ENU basis (exact rigid rotation, preserves distances to 1e-14!)
-      const nx =
-        sx * this.localFrame.east.x +
-        sy * this.localFrame.east.y +
-        sz * this.localFrame.east.z;
-      const ny =
-        sx * this.localFrame.up.x +
-        sy * this.localFrame.up.y +
-        sz * this.localFrame.up.z;
-      const nz =
-        sx * this.localFrame.south.x +
-        sy * this.localFrame.south.y +
-        sz * this.localFrame.south.z;
-
       return {
-        x: anchorNewPos.x + nx,
-        y: anchorNewPos.y + ny,
-        z: anchorNewPos.z + nz,
+        x: localPos.x + (anchorNewPos.x - anchorOldPos.x),
+        y: localPos.y + (anchorNewPos.y - anchorOldPos.y),
+        z: localPos.z + (anchorNewPos.z - anchorOldPos.z),
       };
     }
 
@@ -661,8 +650,46 @@ export class RiverSpline implements RiverProvider {
   }
 
   /**
-   * Re-anchor the Floating-Origin ENU `LocalTangentFrame` at arc-length `s` so local
-   * 3D coordinates stay crisp and float32-clean across long planetary voyages!
+   * Project a true planetary `(lat, lng, elev)` coordinate into the active local 3D space,
+   * respecting per-leg rigid ENU alignment across fast intercontinental Jet-Stream transitions.
+   */
+  public projectEarthPoint(
+    lat: number,
+    lng: number,
+    elev: number,
+    hintS?: number,
+  ): Vec3 {
+    const leg = this.findLegAtS(hintS ?? this.lastPlayerS);
+    if (leg && !leg.isConnector && leg.geoOriginFrame && leg.worldAnchorPos) {
+      return this.projectGeoToLegSpace(leg, lat, lng, elev);
+    }
+    return earthToLocal(lat, lng, elev, this.localFrame);
+  }
+
+  private projectGeoToLegSpace(
+    leg: WaterwayChainLeg,
+    lat: number,
+    lng: number,
+    elev: number,
+  ): Vec3 {
+    if (leg.geoOriginFrame && leg.worldAnchorPos) {
+      const p = earthToLocal(lat, lng, elev, leg.geoOriginFrame);
+      const yaw = leg.yawAlignRad ?? 0;
+      const c = Math.cos(yaw);
+      const s = Math.sin(yaw);
+      return {
+        x: leg.worldAnchorPos.x + p.x * c + p.z * s,
+        y: leg.worldAnchorPos.y + p.y,
+        z: leg.worldAnchorPos.z - p.x * s + p.z * c,
+      };
+    }
+    return earthToLocal(lat, lng, elev, this.localFrame);
+  }
+
+  /**
+   * Re-anchor the Floating-Origin ENU `LocalTangentFrame` at arc-length `s` using an
+   * exact rigid translation so local 3D coordinates stay float32-clean across long
+   * multi-continent voyages and Jet-Stream connectors with 0.000u distortion!
    */
   public recenterOriginAt(s: number): boolean {
     const safeS = Math.max(0, s);
@@ -676,10 +703,19 @@ export class RiverSpline implements RiverProvider {
     const prevFrame = this.localFrame;
     const prevBaseline = this.dropBaselineOffset;
 
-    // Anchor new ENU origin at exact current planetary (lat, lng, rawElev)
-    // and absorb cumulative waterfall drop into `dropBaselineOffset` so local Y resets near 0!
     const currentDropSum = this.computeWaterfallDropSumAt(safeS);
     const rawElevAtS = sampleBefore.elevation + (currentDropSum - prevBaseline);
+
+    // Ensure leg 0 captures its original ENU frame before localFrame moves
+    if (this.chain.length > 0 && !this.chain[0].geoOriginFrame) {
+      this.chain[0].geoOriginFrame = prevFrame;
+      this.chain[0].worldAnchorPos = { x: 0, y: 0, z: 0 };
+      this.chain[0].yawAlignRad = 0;
+    }
+
+    const dx = -anchorOldPos.x;
+    const dy = -anchorOldPos.y;
+    const dz = -anchorOldPos.z;
 
     this.dropBaselineOffset = currentDropSum;
     this.localFrame = createLocalTangentFrame(
@@ -689,17 +725,22 @@ export class RiverSpline implements RiverProvider {
     );
     this.frameRevision += 1;
 
-    // Re-project every buffered spline node cleanly into the new Floating-Origin ENU frame
+    // Exact rigid translation of all buffered spline nodes & leg anchors (0.000u stretch!)
     for (let i = 0; i < this.nodes.length; i++) {
       const n = this.nodes[i];
-      const projected = earthToLocal(n.lat, n.lng, n.rawElev, this.localFrame);
-      n.x = projected.x;
-      n.z = projected.z;
-      n.baseY = projected.y;
+      n.x += dx;
+      n.z += dz;
+      n.baseY += dy;
+    }
+    for (let i = 0; i < this.chain.length; i++) {
+      const anchor = this.chain[i].worldAnchorPos;
+      if (anchor) {
+        anchor.x += dx;
+        anchor.y += dy;
+        anchor.z += dz;
+      }
     }
 
-    // Recompute segment LUTs while keeping `nodes[anchorIdx].s` locked to `anchorSBefore`
-    // so `duck.s` maps to the exact same geographic point with 0.000u drift!
     this.recomputeArcLengthsAnchored(anchorIdx, anchorSBefore);
     for (let i = 0; i < this.waterfalls.length; i++) {
       this.waterfalls[i].topY = Number.NaN;
@@ -724,21 +765,43 @@ export class RiverSpline implements RiverProvider {
   public getBlendedRegionAtS(s: number): BlendedEarthRegion {
     const sample = this.sampleAt(s);
     const leg = this.findLegAtS(s);
-    return this.resolveLegAwareBlendedRegion(sample.lat, sample.lng, leg);
+    const localS = leg ? clamp(s - leg.startS, 0, leg.lengthU) : 0;
+    return this.resolveLegAwareBlendedRegion(sample.lat, sample.lng, leg, localS);
   }
 
   /**
-   * Resolve spatial `BlendedEarthRegion` at `(lat, lng)` while guaranteeing that when
-   * two neighboring zones' outer `radiusDeg` overlap over a non-connector regional
-   * waterway, the waterway's own home region zone takes primary precedence.
+   * Resolve spatial `BlendedEarthRegion` at `(lat, lng)`:
+   * - On Jet-Stream intercontinental connector legs (`leg.isConnector`), smoothly morph
+   *   `fromZone` -> `toZone` right across the fast 4-second connector so the destination
+   *   biome, weather, flora, and water optics pour in immediately!
+   * - On regional rivers, keep the waterway's own home region pure.
    */
   private resolveLegAwareBlendedRegion(
     lat: number,
     lng: number,
     leg: WaterwayChainLeg | null,
+    legLocalS?: number,
   ): BlendedEarthRegion {
+    if (leg && leg.isConnector) {
+      const fromZone = earthWorld.getZoneById(leg.regionId);
+      const toZone = earthWorld.getZoneById(leg.toRegionId ?? leg.regionId);
+      if (fromZone.id !== toZone.id) {
+        const tNorm = clamp(
+          (legLocalS ?? 0) / Math.max(1, leg.lengthU),
+          0,
+          1,
+        );
+        const morph = smoothstep01(clamp((tNorm - 0.1) / 0.74, 0, 1));
+        if (morph < 0.5) {
+          return blendEarthRegionZones(fromZone, toZone, morph);
+        }
+        return blendEarthRegionZones(toZone, fromZone, 1.0 - morph);
+      }
+      return blendEarthRegionZones(toZone, toZone, 0);
+    }
+
     const raw = earthWorld.getBlendedRegionAt(lat, lng);
-    if (!leg || leg.isConnector) return raw;
+    if (!leg) return raw;
 
     if (raw.primaryZone.id === leg.regionId) {
       if (raw.blend > 0 && raw.secondaryZone.id !== leg.regionId) {
@@ -1072,11 +1135,11 @@ export class RiverSpline implements RiverProvider {
       const localD = Math.min(previewSpan, k * sampleStep);
       const wwSample = earthWorld.sampleWaterway(altBranch.waterwayId, localD);
       const effElev = wwSample.elevation + forkLeg.elevOffset - juncDropNet;
-      const earthPos = earthToLocal(
+      const earthPos = this.projectGeoToLegSpace(
+        forkLeg,
         wwSample.lat,
         wwSample.lng,
         effElev,
-        this.localFrame,
       );
 
       let pos = earthPos;
@@ -1270,6 +1333,7 @@ export class RiverSpline implements RiverProvider {
       geo.lat,
       geo.lng,
       activeLeg,
+      nodeLocalS,
     );
     const profile = blendedRegion.riverProfile;
     const waterStyle = blendedRegion.waterStyle;
@@ -1877,19 +1941,30 @@ export class RiverSpline implements RiverProvider {
       prevLeg,
       preferredSide ?? null,
     );
-    const len = Math.max(80, earthWorld.getWaterwayLength(nextWw.id));
+    const realLen = Math.max(80, earthWorld.getWaterwayLength(nextWw.id));
+    const isConnector = Boolean(nextWw.isConnector);
+    const toJunc = earthWorld.getJunctionById(nextWw.toJunctionId);
+    const toRegionId = toJunc?.regionId ?? nextWw.regionId;
+    // Compress long intercontinental ocean/canyon connectors into an exciting ~4s Jet-Stream
+    // transition while still sweeping the duck's real GPS across the entire Earth waterway!
+    const len =
+      isConnector && realLen > CONNECTOR_PLAYABLE_LEN
+        ? CONNECTOR_PLAYABLE_LEN
+        : realLen;
 
     this.chain.push({
       index: nextIndex,
       waterwayId: nextWw.id,
       waterwayName: nextWw.name,
       regionId: nextWw.regionId,
+      toRegionId,
       fromJunctionId: nextWw.fromJunctionId,
       toJunctionId: nextWw.toJunctionId,
       startS,
       endS: startS + len,
       lengthU: len,
-      isConnector: Boolean(nextWw.isConnector),
+      realLengthU: realLen,
+      isConnector,
       isReturnLoop: false,
       locked: false,
       elevOffset: prevLeg.elevOffset,
@@ -2217,7 +2292,15 @@ export class RiverSpline implements RiverProvider {
       };
     }
 
-    const wwSample = earthWorld.sampleWaterway(leg.waterwayId, safeLocalS);
+    // Map compressed Jet-Stream connector progress onto the full real planetary waterway
+    // so live GPS zips smoothly across oceans & continents on the 3D Mini-Earth Globe!
+    const realLen = leg.realLengthU ?? leg.lengthU;
+    const isCompressedConnector = leg.isConnector && realLen > leg.lengthU + 1.0;
+    const geoSampleS = isCompressedConnector
+      ? clamp(safeLocalS / Math.max(1, leg.lengthU), 0, 1) * realLen
+      : safeLocalS;
+
+    const wwSample = earthWorld.sampleWaterway(leg.waterwayId, geoSampleS);
     let lat = wwSample.lat;
     let lng = wwSample.lng;
 
@@ -2379,7 +2462,7 @@ export class RiverSpline implements RiverProvider {
 
       const addedWfS: number[] = [];
 
-      if (!leg.isReturnLoop) {
+      if (!leg.isReturnLoop && !leg.isConnector) {
         // Scan waterway in 4u steps to detect all declared `isWaterfall` waypoint bands
         let inBand = false;
         let bandStartLocal = 0;
@@ -2444,8 +2527,14 @@ export class RiverSpline implements RiverProvider {
         }
       }
 
-      // Avoid crossing any physical 2-way fork junction so player always has unobstructed fork steering!
-      const legAtStart = this.findLegAtS(startS);
+      // Keep caves strictly inside regional rivers (skip short Jet-Stream connectors so
+      // players burst cleanly into the destination continent!) and away from fork junctions!
+      let legAtStart = this.findLegAtS(startS);
+      if (legAtStart && legAtStart.isConnector) {
+        startS = legAtStart.endS + 32;
+        legAtStart = this.findLegAtS(startS);
+      }
+
       if (legAtStart && this.routeMode !== 'single_track') {
         const distToJunc = legAtStart.endS - startS;
         if (distToJunc < 95) {
@@ -2547,7 +2636,76 @@ export class RiverSpline implements RiverProvider {
     const legLocalS = clamp(sampleS - leg.startS, 0, leg.lengthU);
     const raw = this.sampleChainLegRaw(leg, legLocalS);
     const u = latLngToSphere(raw.lat, raw.lng, 1.0);
-    const localPos = earthToLocal(raw.lat, raw.lng, raw.elevation, this.localFrame);
+
+    const realLen = leg.realLengthU ?? leg.lengthU;
+    const isCompressedConnector = leg.isConnector && realLen > leg.lengthU + 1.0;
+
+    let localPos: Vec3;
+    const lastNode = this.nodes.length > 0 ? this.nodes[this.nodes.length - 1] : null;
+    const prevNode = this.nodes.length > 1 ? this.nodes[this.nodes.length - 2] : null;
+
+    if (isCompressedConnector && lastNode && prevNode) {
+      const prevLeg = leg.index > 0 ? this.chain[leg.index - 1] : null;
+      if (legLocalS <= 28.0 && prevLeg && !prevLeg.isConnector) {
+        // First 28u out of a 2-way fork follow the EXACT physical diverging branch geometry
+        // so the Y-fork water split matches `getForkBranchPreview` with 0.000u seam gap!
+        const exitGeo = earthWorld.sampleWaterway(leg.waterwayId, legLocalS);
+        localPos = this.projectGeoToLegSpace(
+          prevLeg,
+          exitGeo.lat,
+          exitGeo.lng,
+          exitGeo.elevation + leg.elevOffset,
+        );
+        leg.connectorHeading = Math.atan2(
+          localPos.x - lastNode.x,
+          localPos.z - lastNode.z,
+        );
+      } else {
+        // Smooth 1:1 Jet-Stream rapids glide curving gently into the destination continent
+        const baseHeading =
+          leg.connectorHeading ??
+          Math.atan2(lastNode.x - prevNode.x, lastNode.z - prevNode.z);
+        const turnRate =
+          Math.sin(legLocalS * 0.055 + leg.index * 1.9) * 0.042;
+        const nextHeading = baseHeading + turnRate;
+        leg.connectorHeading = nextHeading;
+        localPos = {
+          x: lastNode.x + Math.sin(nextHeading) * NODE_STEP,
+          y: lastNode.baseY - 0.028 * NODE_STEP,
+          z: lastNode.z + Math.cos(nextHeading) * NODE_STEP,
+        };
+      }
+    } else {
+      // Regional river leg: anchor exact rigid planetary ENU transform flush onto previous leg!
+      if (leg.index > 0 && !leg.geoOriginFrame && lastNode && prevNode) {
+        const geo0 = earthWorld.sampleWaterway(leg.waterwayId, 0);
+        const geo1 = earthWorld.sampleWaterway(leg.waterwayId, 6.0);
+        const legFrame = createLocalTangentFrame(
+          geo0.lat,
+          geo0.lng,
+          geo0.elevation + leg.elevOffset,
+        );
+        const p1 = earthToLocal(
+          geo1.lat,
+          geo1.lng,
+          geo1.elevation + leg.elevOffset,
+          legFrame,
+        );
+        const geoStartYaw = Math.atan2(p1.x, p1.z);
+        const prevExitYaw = Math.atan2(
+          lastNode.x - prevNode.x,
+          lastNode.z - prevNode.z,
+        );
+        leg.geoOriginFrame = legFrame;
+        leg.yawAlignRad = prevExitYaw - geoStartYaw;
+        leg.worldAnchorPos = {
+          x: lastNode.x,
+          y: lastNode.baseY,
+          z: lastNode.z,
+        };
+      }
+      localPos = this.projectGeoToLegSpace(leg, raw.lat, raw.lng, raw.elevation);
+    }
 
     const prevS = this.nodes.length > 0 ? this.nodes[this.nodes.length - 1].s : 0;
     this.nodes.push({

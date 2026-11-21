@@ -271,6 +271,30 @@ export class CameraRig {
         surfaceVis;
     }
 
+    // Gently duck chase camera when passing under a low overhead log/willow obstacle
+    // so the camera glides cleanly underneath instead of colliding with solid bark!
+    if (
+      !activeCave &&
+      this.smoothDiveBlend < 0.65 &&
+      duck.mode !== 'flying' &&
+      !duck.isCrashed &&
+      gameState !== 'gameover' &&
+      river.getObstaclesInRange
+    ) {
+      const overhead = river.getObstaclesInRange(
+        duck.s - this.smoothFollowDist - 3.5,
+        duck.s + 2.5,
+      );
+      for (let i = 0; i < overhead.length; i++) {
+        const obs = overhead[i];
+        if (obs.type === 'log_dive' || obs.type === 'arch') {
+          targetHeight = Math.min(targetHeight, 1.38);
+          targetLookOffsetY = Math.min(targetLookOffsetY, 0.35);
+          break;
+        }
+      }
+    }
+
     // Tighter scenic clearance inside caves so camera stays comfortably inside the mossy rock arch
     if (activeCave) {
       targetFollowDist = Math.min(targetFollowDist, 4.35 + portraitT * 0.65);

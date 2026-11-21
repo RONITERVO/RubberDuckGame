@@ -145,6 +145,7 @@ export class SoundEngine implements AudioController {
   private lastSpookAt = -10;
   private lastFlapAt = -10;
   private lastThunderAt = -10;
+  private lastBubbleChimeAt = -10;
   private lastSubmersion = 0;
 
   // Auto-unlock gesture cleanup
@@ -1434,9 +1435,14 @@ export class SoundEngine implements AudioController {
       return;
     }
 
+    // Soft 65ms cadence limiter on rapid bubble chains (Wing Gust / Magnet) so streaks
+    // sparkle musically instead of harsh machine-gun beeping!
+    if (now - this.lastBubbleChimeAt < 0.065) return;
+    this.lastBubbleChimeAt = now;
+
     const accentHz = getScaleNoteHz(profile, step + 2);
-    this.playTimbreNote(now, baseHz, 0.17, 0.22, profile.timbre);
-    this.playTimbreNote(now + 0.042, accentHz, 0.14, 0.11, profile.timbre);
+    this.playTimbreNote(now, baseHz, 0.16, 0.16, profile.timbre);
+    this.playTimbreNote(now + 0.044, accentHz, 0.13, 0.08, profile.timbre);
   }
 
   /**

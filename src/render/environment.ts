@@ -1068,15 +1068,18 @@ float caveNoise(vec2 p) {
   float softVein = smoothstep(0.58, 0.86, veinN * 0.68 + fineN * 0.42);
   float sharpFissure = pow(clamp(1.0 - abs(veinN * 2.0 - 1.0), 0.0, 1.0), 3.6);
   float fissureMix = clamp((uCaveGlowIntensity - 0.95) * 1.1, 0.0, 1.0);
-  float glowMask = mix(softVein, max(softVein, sharpFissure * 1.25), fissureMix) * vCaveMeta.z * pulse;
+  // Only emit bioluminescent glow veins strictly on the INSIDE of the cave tunnel —
+  // the exterior shell blends naturally as dark wet mossy stone into the bank (zero glowing exterior blobs!).
+  float interiorSide = gl_FrontFacing ? 0.0 : 1.0;
+  float glowMask = mix(softVein, max(softVein, sharpFissure * 1.25), fissureMix) * vCaveMeta.z * pulse * interiorSide;
 
-  totalEmissiveRadiance += uCaveGlowColor * (glowMask * uCaveGlowIntensity + 0.03 * uCaveGlowIntensity);
-  totalEmissiveRadiance += uCaveSkylightColor * vCaveMeta.y * 1.15;
+  totalEmissiveRadiance += uCaveGlowColor * (glowMask * uCaveGlowIntensity + 0.025 * uCaveGlowIntensity * interiorSide);
+  totalEmissiveRadiance += uCaveSkylightColor * vCaveMeta.y * 1.15 * interiorSide;
 
   float subDepth = max(0.0, -vCaveMeta.x);
   if (subDepth > 0.01) {
     float cVal = evaluateUnderwaterCaustics(vCaveWorldPos, normalize(vCaveWorldNormal), subDepth);
-    totalEmissiveRadiance += uCaveGlowColor * cVal * 0.36;
+    totalEmissiveRadiance += uCaveGlowColor * cVal * 0.36 * interiorSide;
   }
 }
 `,
@@ -1168,6 +1171,12 @@ type RiverProviderWithEarthHelpers = RiverProvider & {
   getCaveCenterU?: (branch: CaveBranchInfo, s: number) => number;
   getCaveCeilingY?: (branch: CaveBranchInfo, s: number) => number;
   getLocalTangentFrame?: () => LocalTangentFrame;
+  projectEarthPoint?: (
+    lat: number,
+    lng: number,
+    elev: number,
+    hintS?: number,
+  ) => { x: number; y: number; z: number };
   getFrameRevision?: () => number;
   getForkBranchPreview?: (playerS: number) => ForkBranchPreviewResult;
 };
@@ -2545,10 +2554,10 @@ export class Environment {
       const centerU = this.evalCaveCenterU(cave, s, sample.width, river);
 
       const portalFlare =
-        1.0 + 0.22 * (Math.exp(-t * 14.0) + Math.exp(-(1.0 - t) * 14.0));
+        1.0 + 0.08 * (Math.exp(-t * 14.0) + Math.exp(-(1.0 - t) * 14.0));
       const localArchH = caveHelper.getCaveCeilingY
-        ? Math.max(caveHelper.getCaveCeilingY(cave, s) * 1.15, archH * 0.88)
-        : archH * portalFlare;
+        ? Math.max(caveHelper.getCaveCeilingY(cave, s) * 0.86, archH * 0.72)
+        : archH * 0.82 * portalFlare;
 
       const epsS = 0.5;
       const sNext = Math.min(cave.endS, s + epsS);
@@ -2608,22 +2617,21 @@ export class Environment {
       }
 
       if (
-        (r === 1 || r === CAVE_ROWS - 2 || r % 3 === 0) &&
+        r >= 3 &&
+        r <= CAVE_ROWS - 4 &&
+        r % 3 === 0 &&
         beaconIdx < maxBeacons - 2
       ) {
-        const isPortal = r === 1 || r === CAVE_ROWS - 2;
-        const angles = isPortal
-          ? [0.18 * Math.PI, 0.5 * Math.PI, 0.82 * Math.PI]
-          : [0.22 * Math.PI, 0.78 * Math.PI];
+        const angles = [0.24 * Math.PI, 0.76 * Math.PI];
         for (let bi = 0; bi < angles.length && beaconIdx < maxBeacons; bi++) {
           const ang = angles[bi];
-          const lx = Math.cos(ang) * (archHalfW * (isPortal ? 1.04 : 0.88));
-          const ly = Math.sin(ang) * (localArchH * (isPortal ? 1.02 : 0.86));
+          const lx = Math.cos(ang) * (archHalfW * 0.82);
+          const ly = Math.sin(ang) * (localArchH * 0.8);
           this.tmpPos.set(cx + rx * lx, cy + ly, cz + rz * lx);
           this.tmpEuler.set(r * 0.4, bi * 1.1, ang);
           this.tmpQuat.setFromEuler(this.tmpEuler);
-          const sc = isPortal ? 1.45 : 0.92;
-          this.tmpScale.set(sc, sc * 1.45, sc);
+          const sc = 0.78;
+          this.tmpScale.set(sc, sc * 1.28, sc);
           this.tmpMat.compose(this.tmpPos, this.tmpQuat, this.tmpScale);
           this.caveBeaconMesh.setMatrixAt(beaconIdx++, this.tmpMat);
         }
@@ -2682,12 +2690,13 @@ export class Environment {
 
       const glowColor = this.colorA.setHex(caveRegion.caveStyle.glowColor);
       const lenS = Math.max(cave.endS - cave.startS, 12);
-      const archHalfW = cave.width * 0.62;
+      const archHalfW = cave.width * 0.56;
       const archH = cave.ceilingHeight;
-      const count = 8;
+      const count = 5;
 
       for (let k = 0; k < count; k++) {
-        const t = 0.04 + (k / (count - 1)) * 0.92;
+        // Strictly tucked inside the interior cave walls — never poking through the exterior shell!
+        const t = 0.24 + (k / (count - 1)) * 0.54;
         const s = cave.startS + t * lenS;
         const sample = river.sampleAt(s);
         const centerU = this.evalCaveCenterU(cave, s, sample.width, river);
@@ -2697,18 +2706,18 @@ export class Environment {
         const cz = sample.position.z + sample.right.z * centerU;
 
         const side: -1 | 1 = k % 2 === 0 ? -1 : 1;
-        const wallOffset = side * archHalfW * 0.92;
-        const heightOffset = 0.4 + (k % 3) * 0.65;
+        const wallOffset = side * archHalfW * 0.58;
+        const heightOffset = -0.15 + (k % 3) * 0.28;
 
         this.tmpPos.set(
           cx + sample.right.x * wallOffset,
-          cy + Math.min(heightOffset, archH * 0.55),
+          cy + Math.min(heightOffset, archH * 0.28),
           cz + sample.right.z * wallOffset,
         );
         const yaw = Math.atan2(-side * sample.right.x, -side * sample.right.z);
-        this.tmpEuler.set(0.18, yaw, side * 0.42);
+        this.tmpEuler.set(0.14, yaw, side * 0.34);
         this.tmpQuat.setFromEuler(this.tmpEuler);
-        const sc = 0.72 + hash11(k * 17.3 + ci * 5.1) * 0.45;
+        const sc = 0.42 + hash11(k * 17.3 + ci * 5.1) * 0.22;
         this.tmpScale.setScalar(sc);
         this.tmpMat.compose(this.tmpPos, this.tmpQuat, this.tmpScale);
 
@@ -2783,7 +2792,9 @@ export class Environment {
       }
 
       const refElev = duckSample.elevation ?? frame.originElev;
-      const roughLocal = earthToLocal(lm.lat, lm.lng, refElev, frame);
+      const roughLocal = earthRiver.projectEarthPoint
+        ? earthRiver.projectEarthPoint(lm.lat, lm.lng, refElev, duckS)
+        : earthToLocal(lm.lat, lm.lng, refElev, frame);
       const rc = river.worldToRiver(roughLocal, duckS);
 
       if (rc.s < minWindowS || rc.s > maxWindowS) continue;
@@ -2989,14 +3000,18 @@ export class Environment {
         ) {
           continue;
         }
-        if (
-          lm.placement === 'over_river' &&
-          (lmSample.isWaterfall || -lmSample.slope > 0.2)
-        ) {
-          lmS += 14;
-          if (lmS > windowEndS) continue;
-          lmSample = river.sampleAt(lmS);
-          if (lmSample.isWaterfall) continue;
+        // Keep bridges/arches cleanly clear of waterfall lips, drops & foaming plunge pools!
+        if (lm.placement === 'over_river') {
+          let nearWaterfall = false;
+          for (let wp = lmS - 36; wp <= lmS + 26; wp += 6) {
+            if (wp < 0) continue;
+            const ws = river.sampleAt(wp);
+            if (ws.isWaterfall || Math.abs(ws.slope) > 0.18) {
+              nearWaterfall = true;
+              break;
+            }
+          }
+          if (nearWaterfall) continue;
         }
 
         const halfW = lmSample.width * 0.5;

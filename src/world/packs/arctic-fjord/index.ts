@@ -159,7 +159,7 @@ export const arcticFjordPack: EarthRegionPack = {
 
       obstacles: {
         boulderAssets: ['iceberg_spire', 'sunken_canoe', 'floating_barrel'],
-        diveArchAssets: ['ice_arch', 'stone_footbridge'],
+        diveArchAssets: ['fallen_log_arch'],
         jumpLogAssets: ['driftwood_roots', 'mossy_step_stones'],
         obstacleDensity: 1.15,
         chuteBias: 0.56,

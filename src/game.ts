@@ -1040,7 +1040,11 @@ export class RiverDuckerGame {
     if (this.gameState === 'title') {
       duckState = this.duckController.updateTitleIdle(simDt, this.elapsedTime);
       this.river.updateWindow(duckState.s);
-      this.obstacleSpawner.update(duckState.s, this.elapsedTime);
+      this.obstacleSpawner.update(
+        duckState.s,
+        this.elapsedTime,
+        this.cameraRig.getState().position,
+      );
       this.collectibles.update(duckState, simDt, this.elapsedTime);
       this.wildlife.update(duckState, simDt, this.elapsedTime);
     } else if (this.gameState === 'playing') {
@@ -1058,7 +1062,11 @@ export class RiverDuckerGame {
       rapidsTurbulence = stepRes.hydro.turbulence;
 
       this.river.updateWindow(duckState.s);
-      this.obstacleSpawner.update(duckState.s, this.elapsedTime);
+      this.obstacleSpawner.update(
+        duckState.s,
+        this.elapsedTime,
+        this.cameraRig.getState().position,
+      );
 
       // Lazily prioritize upcoming connected waterways' assets when approaching any fork or leg end!
       const liveSample = this.river.sampleAt(duckState.s);

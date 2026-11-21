@@ -162,7 +162,7 @@ export const redCanyonPack: EarthRegionPack = {
           'river_snag_stump',
           'floating_barrel',
         ],
-        diveArchAssets: ['red_rock_arch', 'stone_footbridge', 'fallen_log_arch'],
+        diveArchAssets: ['fallen_log_arch'],
         jumpLogAssets: ['driftwood_roots', 'beaver_dam', 'mossy_step_stones'],
         obstacleDensity: 1.12,
         chuteBias: 0.62,

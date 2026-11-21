@@ -359,16 +359,16 @@ export class ObstacleSpawner {
   public reset(seed: number = 1337): void {
     this.clearAll();
     this.rng = mulberry32(seed);
-    this.nextSpawnS = OBSTACLE_CONFIG.safeStartDistance + 8;
+    this.nextSpawnS = OBSTACLE_CONFIG.safeStartDistance + 6 + this.rng() * 8;
     this.rowIndex = 0;
     this.obstacleSeq = 0;
-    this.lastOpenLaneU = 0;
+    this.lastOpenLaneU = (this.rng() - 0.5) * 3.0;
     this.lastManeuver = 'slalom';
     this.lastManeuverS = 0;
-    this.slalomSign = 1;
-    this.boulderCycleIdx = 0;
-    this.diveCycleIdx = 0;
-    this.jumpCycleIdx = 0;
+    this.slalomSign = this.rng() < 0.5 ? -1 : 1;
+    this.boulderCycleIdx = Math.floor(this.rng() * 12);
+    this.diveCycleIdx = Math.floor(this.rng() * 12);
+    this.jumpCycleIdx = Math.floor(this.rng() * 12);
   }
 
   /**
@@ -507,9 +507,10 @@ export class ObstacleSpawner {
   }
 
   /**
-   * Stream new obstacles ahead of `duckS` and prune far-behind obstacles.
+   * Stream new obstacles ahead of `duckS`, hide overhead logs that would occlude
+   * the chase camera directly behind the duck, and prune far-behind obstacles.
    */
-  public update(duckS: number, time: number): void {
+  public update(duckS: number, time: number, cameraPos?: Vec3): void {
     const aheadS = duckS + Math.min(RIVER_CONFIG.aheadDistance - 114, 72);
     const pruneS = duckS - Math.min(RIVER_CONFIG.behindDistance, 18);
 
@@ -524,11 +525,13 @@ export class ObstacleSpawner {
         const spawned = this.spawnClusterAt(targetS);
         if (spawned) {
           const extra =
-            spawned.maneuver !== 'slalom'
-              ? 4.5
-              : spawned.pattern === 'rock_island'
-                ? 3.5
-                : 0;
+            spawned.maneuver === 'dive'
+              ? 10.5
+              : spawned.maneuver === 'jump'
+                ? 6.5
+                : spawned.pattern === 'rock_island'
+                  ? 4.0
+                  : 0;
           this.nextSpawnS = targetS + spacing + extra;
           this.rowIndex += 1;
           continue;
@@ -539,20 +542,35 @@ export class ObstacleSpawner {
       this.nextSpawnS = targetS + 8.0;
     }
 
-    // 2. Expressive gentle bob & current sway on floating hazards (barrels, canoes, driftwood, lily pads)
+    // 2. Expressive gentle bob & current sway on floating hazards + camera-occlusion safety
     for (let i = 0; i < this.entries.length; i++) {
       const entry = this.entries[i];
+      const obs = entry.data;
       if (entry.bobStyle === 'gentle') {
-        const bob = Math.sin(time * 2.4 + entry.data.s * 0.35) * 0.045;
-        entry.mesh.position.y = entry.data.worldPos.y + bob;
+        const bob = Math.sin(time * 2.4 + obs.s * 0.35) * 0.045;
+        entry.mesh.position.y = obs.worldPos.y + bob;
       } else if (entry.bobStyle === 'barrel') {
-        const phase = time * 3.1 + entry.data.s * 0.42;
-        entry.mesh.position.y = entry.data.worldPos.y + Math.sin(phase) * 0.085;
+        const phase = time * 3.1 + obs.s * 0.42;
+        entry.mesh.position.y = obs.worldPos.y + Math.sin(phase) * 0.085;
         entry.mesh.rotation.z = Math.sin(phase * 0.85) * 0.14;
         entry.mesh.rotation.x = Math.cos(phase * 0.72) * 0.1;
       } else if (entry.bobStyle === 'canoe') {
-        const phase = time * 1.9 + entry.data.s * 0.31;
-        entry.mesh.position.y = entry.data.worldPos.y + Math.sin(phase) * 0.035;
+        const phase = time * 1.9 + obs.s * 0.31;
+        entry.mesh.position.y = obs.worldPos.y + Math.sin(phase) * 0.035;
+      }
+
+      // Prevent overhead dive logs / arches behind the duck from clipping straight into
+      // the chase camera and blinding the player's view of upcoming obstacles!
+      if (cameraPos && (obs.type === 'log_dive' || obs.type === 'arch')) {
+        const behindDuck = obs.s < duckS - 0.35;
+        const dx = obs.worldPos.x - cameraPos.x;
+        const dy = obs.worldPos.y - cameraPos.y;
+        const dz = obs.worldPos.z - cameraPos.z;
+        const distSq = dx * dx + dy * dy + dz * dz;
+        const occludesCamera = behindDuck && distSq < 34.0; // within ~5.8u of camera lens
+        entry.mesh.visible = !occludesCamera;
+      } else {
+        entry.mesh.visible = true;
       }
 
       // Keep obstacle draw calls & shadow-pass triangle count lean across all 6 regions (<= 380k)
@@ -861,11 +879,19 @@ export class ObstacleSpawner {
     }
 
     // Check fork approach + post-fork recovery (±25u across waterway transitions) & waterfalls
+    // Generous downstream recovery buffer (44u past waterfall drop!) so players never land
+    // from a waterfall plunge directly onto a boulder or stepping stones!
     let prevWaterwayId = centerSample.waterwayId;
-    for (let probe = s - 26; probe <= s + 26; probe += 4) {
+    for (let probe = s - 44; probe <= s + 28; probe += 4) {
       if (probe < 0) continue;
       const sample = this.river.sampleAt(probe);
-      if (sample.isWaterfall || Math.abs(sample.slope) > 0.24) {
+      const plungeIntensity =
+        (sample as { plungePoolIntensity?: number }).plungePoolIntensity ?? 0;
+      if (
+        sample.isWaterfall ||
+        plungeIntensity > 0.1 ||
+        Math.abs(sample.slope) > 0.22
+      ) {
         return true;
       }
       if (sample.upcomingFork && sample.upcomingFork.distanceU < 26) {
@@ -913,14 +939,35 @@ export class ObstacleSpawner {
       (id) => id !== 'fallen_log_arch',
     );
 
-    // Gentle readable intro for first 3 rows: showcase slalom, jump, and dive with region + shared assets!
+    // Varied readable opening (shuffled per run seed so every restart feels fresh!)
     let pattern: ObstaclePatternKind;
     if (this.rowIndex === 0) {
-      pattern = zone.obstacles.chuteBias >= 0.55 ? 'slalom_pair' : 'single_boulder';
+      const r0 = this.rng();
+      if (r0 < 0.45) {
+        pattern = zone.obstacles.chuteBias >= 0.55 ? 'slalom_pair' : 'single_boulder';
+      } else if (r0 < 0.78) {
+        pattern = 'slalom_pair';
+      } else {
+        pattern = hasBouncePad ? 'lily_thicket' : 'jump_log';
+      }
     } else if (this.rowIndex === 1) {
-      pattern = hasBouncePad ? 'lily_thicket' : 'jump_log';
+      const r1 = this.rng();
+      if (r1 < 0.5) {
+        pattern = hasBouncePad ? 'lily_thicket' : 'jump_log';
+      } else if (r1 < 0.8) {
+        pattern = 'dive_log';
+      } else {
+        pattern = 'snag_chicane';
+      }
     } else if (this.rowIndex === 2) {
-      pattern = hasFeaturedArch ? 'dive_arch' : 'dive_log';
+      const r2 = this.rng();
+      if (r2 < 0.45) {
+        pattern = hasFeaturedArch ? 'dive_arch' : 'dive_log';
+      } else if (r2 < 0.75) {
+        pattern = 'jump_log';
+      } else {
+        pattern = 'rock_island';
+      }
     } else {
       pattern = this.chooseNextPattern(s, sample, zone);
     }
@@ -1455,9 +1502,15 @@ export class ObstacleSpawner {
     forcedAsset?: AssetId,
   ): HydroObstacle {
     const isArch = type === 'arch';
-    const pool = zone.obstacles.diveArchAssets;
+    // Never pick tall open scenic pass-through bridges/gates as head-bonk dive obstacles;
+    // they belong strictly in `Environment` as non-lethal scenic `over_river` landmarks!
+    const rawPool = zone.obstacles.diveArchAssets ?? [];
+    const safePool = rawPool.filter(
+      (id) => id !== 'stone_footbridge' && id !== 'torii_gate',
+    );
+    const pool = safePool.length > 0 ? safePool : ['fallen_log_arch'];
     let assetId: AssetId = forcedAsset ?? 'fallen_log_arch';
-    if (!forcedAsset && pool && pool.length > 0) {
+    if (!forcedAsset && pool.length > 0) {
       if (isArch) {
         const archCandidates = pool.filter((id) => id !== 'fallen_log_arch');
         assetId =
@@ -1469,8 +1522,8 @@ export class ObstacleSpawner {
       }
     }
 
-    const centerY = isArch ? 1.48 : THREE.MathUtils.lerp(1.22, 1.44, this.rng());
-    const height = isArch ? 1.75 : 1.45;
+    const centerY = isArch ? 1.24 : THREE.MathUtils.lerp(1.12, 1.32, this.rng());
+    const height = isArch ? 1.45 : 1.35;
     const clearanceBelow = Math.max(1.8, Math.min(sample.depth - 0.55, isArch ? 2.6 : 2.2));
     const worldPos = this.river.riverToWorld(s, u, centerY);
     const baseYaw = Math.atan2(sample.tangent.x, sample.tangent.z);
@@ -1762,43 +1815,43 @@ export class ObstacleSpawner {
           archModel.position.y = obs.type === 'arch' ? 0.25 : 0.12;
           root.add(archModel);
         } else {
-          // Arched bridges, willow overhangs, Torii gates, canyon/ice/obsidian arches
+          // Low-slung overhanging branches / dive arches visually matched 1:1 to head-bonk height!
           const scaleX = (obs.width * 1.06) / Math.max(0.5, spanSize);
           const isTallGate = heightRatio > 0.72;
           const targetArchHeight =
-            archAssetId === 'stone_footbridge'
-              ? 4.7
-              : archAssetId === 'willow_overhang'
-                ? 4.9
+            archAssetId === 'willow_overhang'
+              ? 2.85
+              : archAssetId === 'stone_footbridge'
+                ? 4.7
                 : isTallGate
-                  ? 5.8
-                  : 4.8;
+                  ? 4.8
+                  : 3.15;
           const scaleY = THREE.MathUtils.clamp(
             targetArchHeight / Math.max(0.8, loaded.size.y),
             0.35,
-            1.45,
+            1.35,
           );
           const targetDepth =
             archAssetId === 'stone_footbridge'
               ? 3.3
               : archAssetId === 'willow_overhang'
-                ? 2.7
-                : 2.8;
+                ? 2.4
+                : 2.5;
           const scaleZ = THREE.MathUtils.clamp(
             targetDepth / Math.max(0.5, depthSize),
             0.35,
-            1.45,
+            1.35,
           );
 
           archModel.scale.set(scaleX, scaleY, scaleZ);
           archModel.position.y =
             archAssetId === 'willow_overhang'
-              ? -0.25
+              ? -0.22
               : archAssetId === 'stone_footbridge'
                 ? -0.45
                 : isTallGate
-                  ? -0.78
-                  : -0.58;
+                  ? -0.68
+                  : -0.35;
           root.add(archModel);
 
           // For very tall gateways (e.g. Torii gate whose cross-beam sits high up),

@@ -147,8 +147,7 @@ export const amazonMonsoonPack: EarthRegionPack = {
         landmarks: [
           { assetId: 'temple_ruin', placement: 'bank_left', spacing: 68, scale: 1.22, yOffset: -0.3 },
           { assetId: 'temple_ruin', placement: 'bank_right', spacing: 74, scale: 1.25, yOffset: -0.3 },
-          { assetId: 'willow_overhang', placement: 'over_river', spacing: 96, scale: 1.22, yOffset: 1.2 },
-          { assetId: 'fallen_log_arch', placement: 'over_river', spacing: 118, scale: 1.2, yOffset: 2.0 },
+          { assetId: 'stone_footbridge', placement: 'over_river', spacing: 135, scale: 1.2, yOffset: 0.45 },
         ],
         treeDensity: 1.22,
         foliageDensity: 1.3,
@@ -164,7 +163,7 @@ export const amazonMonsoonPack: EarthRegionPack = {
           'river_snag_stump',
           'floating_barrel',
         ],
-        diveArchAssets: ['willow_overhang', 'fallen_log_arch', 'stone_footbridge'],
+        diveArchAssets: ['willow_overhang', 'fallen_log_arch'],
         jumpLogAssets: ['giant_lily_pad', 'beaver_dam', 'cattail_reeds', 'driftwood_roots'],
         obstacleDensity: 1.08,
         chuteBias: 0.46,

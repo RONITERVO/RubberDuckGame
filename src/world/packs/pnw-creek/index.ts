@@ -144,8 +144,7 @@ export const pnwCreekPack: EarthRegionPack = {
         ],
         landmarks: [
           { assetId: 'waterwheel_mill', placement: 'bank_left', spacing: 115, scale: 1.15, yOffset: -0.35 },
-          { assetId: 'stone_footbridge', placement: 'over_river', spacing: 120, scale: 1.18, yOffset: 0.45 },
-          { assetId: 'fallen_log_arch', placement: 'over_river', spacing: 96, scale: 1.12, yOffset: 1.9 },
+          { assetId: 'stone_footbridge', placement: 'over_river', spacing: 125, scale: 1.18, yOffset: 0.45 },
         ],
         treeDensity: 1.0,
         foliageDensity: 1.08,
@@ -161,7 +160,7 @@ export const pnwCreekPack: EarthRegionPack = {
           'river_snag_stump',
           'floating_barrel',
         ],
-        diveArchAssets: ['fallen_log_arch', 'stone_footbridge', 'willow_overhang'],
+        diveArchAssets: ['fallen_log_arch', 'willow_overhang'],
         jumpLogAssets: ['beaver_dam', 'driftwood_roots', 'mossy_step_stones', 'cattail_reeds'],
         obstacleDensity: 0.94,
         chuteBias: 0.36,
