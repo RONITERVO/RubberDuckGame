@@ -1,0 +1,22 @@
+{
+  "name": "river-ducker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "River Ducker: Mini-Earth World Tour — 3D endless whitewater kayaking runner across a shared physical Mini-Earth.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.174.0",
+    "playwright": "^1.65.1",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2"
+  }
+}

@@ -1,0 +1,2746 @@
+{
+  "version": 3,
+  "generatedAt": "2026-11-21T14:56:50Z",
+  "coordinateConvention": "+Z forward, +Y up, 1.0 world unit = 10cm (Duck Scale)",
+  "totalBytes": 12347448,
+  "totalTriangles": 131433,
+  "duckAttachments": {
+    "wingLeftOffset": [
+      0.42,
+      0.36,
+      -0.02
+    ],
+    "wingRightOffset": [
+      -0.42,
+      0.36,
+      -0.02
+    ],
+    "wingScale": 1.22,
+    "feetOffset": [
+      0.0,
+      -0.15,
+      -0.06
+    ],
+    "headOffset": [
+      0.0,
+      0.88,
+      0.14
+    ]
+  },
+  "models": {
+    "rubber_duck": {
+      "id": "rubber_duck",
+      "filename": "rubber_duck.glb",
+      "file": "rubber_duck.glb",
+      "url": "./models/rubber_duck.glb",
+      "role": "hero",
+      "byteSize": 469668,
+      "bytes": 469668,
+      "triangles": 10368,
+      "vertices": 8192,
+      "bbox": {
+        "min": [
+          -0.69888,
+          -0.95181,
+          -0.7423
+        ],
+        "max": [
+          0.69734,
+          0.95093,
+          0.74167
+        ],
+        "size": [
+          1.39622,
+          1.90274,
+          1.48397
+        ],
+        "center": [
+          -0.00077,
+          -0.00044,
+          -0.00031
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 49368
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 8130
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "bytes": 23299
+        }
+      ],
+      "targetSize": 1.25,
+      "sizeAxis": "z",
+      "pivot": "waterline",
+      "yOffset": 0.0,
+      "rotY": 0.18,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 0.84234,
+        "yOffset": 0.0,
+        "rotY": 0.18
+      },
+      "wingAttachments": {
+        "wingLeftOffset": [
+          0.42,
+          0.36,
+          -0.02
+        ],
+        "wingRightOffset": [
+          -0.42,
+          0.36,
+          -0.02
+        ],
+        "wingScale": 1.22,
+        "feetOffset": [
+          0.0,
+          -0.15,
+          -0.06
+        ],
+        "headOffset": [
+          0.0,
+          0.88,
+          0.14
+        ]
+      }
+    },
+    "mossy_boulder_a": {
+      "id": "mossy_boulder_a",
+      "filename": "mossy_boulder_a.glb",
+      "file": "mossy_boulder_a.glb",
+      "url": "./models/mossy_boulder_a.glb",
+      "role": "obstacle",
+      "byteSize": 330088,
+      "bytes": 330088,
+      "triangles": 3935,
+      "vertices": 6936,
+      "bbox": {
+        "min": [
+          -0.95167,
+          -0.71107,
+          -0.75297
+        ],
+        "max": [
+          0.9501,
+          0.71061,
+          0.75134
+        ],
+        "size": [
+          1.90177,
+          1.42168,
+          1.50431
+        ],
+        "center": [
+          -0.00079,
+          -0.00023,
+          -0.00082
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 29513
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 24851
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 4244
+        }
+      ],
+      "targetSize": 3.6,
+      "sizeAxis": "max",
+      "pivot": "bottom",
+      "yOffset": -0.35,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.89297,
+        "yOffset": -0.35,
+        "rotY": 0.0
+      }
+    },
+    "mossy_boulder_b": {
+      "id": "mossy_boulder_b",
+      "filename": "mossy_boulder_b.glb",
+      "file": "mossy_boulder_b.glb",
+      "url": "./models/mossy_boulder_b.glb",
+      "role": "obstacle",
+      "byteSize": 352584,
+      "bytes": 352584,
+      "triangles": 3724,
+      "vertices": 7961,
+      "bbox": {
+        "min": [
+          -0.53272,
+          -0.95191,
+          -0.49859
+        ],
+        "max": [
+          0.53016,
+          0.9471,
+          0.49766
+        ],
+        "size": [
+          1.06288,
+          1.89901,
+          0.99625
+        ],
+        "center": [
+          -0.00128,
+          -0.0024,
+          -0.00046
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20119
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26988
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 3760
+        }
+      ],
+      "targetSize": 4.2,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.4,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.21168,
+        "yOffset": -0.4,
+        "rotY": 0.0
+      }
+    },
+    "fallen_log_arch": {
+      "id": "fallen_log_arch",
+      "filename": "fallen_log_arch.glb",
+      "file": "fallen_log_arch.glb",
+      "url": "./models/fallen_log_arch.glb",
+      "role": "obstacle",
+      "byteSize": 431968,
+      "bytes": 431968,
+      "triangles": 4931,
+      "vertices": 8741,
+      "bbox": {
+        "min": [
+          -0.95072,
+          -0.27285,
+          -0.34235
+        ],
+        "max": [
+          0.94875,
+          0.27182,
+          0.33781
+        ],
+        "size": [
+          1.89948,
+          0.54467,
+          0.68015
+        ],
+        "center": [
+          -0.00098,
+          -0.00051,
+          -0.00227
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 56778
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26407
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 7581
+        }
+      ],
+      "targetSize": 11.5,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.0,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.05429,
+        "yOffset": 0.0,
+        "rotY": 0.0
+      }
+    },
+    "driftwood_roots": {
+      "id": "driftwood_roots",
+      "filename": "driftwood_roots.glb",
+      "file": "driftwood_roots.glb",
+      "url": "./models/driftwood_roots.glb",
+      "role": "obstacle",
+      "byteSize": 350168,
+      "bytes": 350168,
+      "triangles": 4273,
+      "vertices": 6111,
+      "bbox": {
+        "min": [
+          -0.48267,
+          -0.27026,
+          -0.323
+        ],
+        "max": [
+          0.48022,
+          0.26538,
+          0.30884
+        ],
+        "size": [
+          0.96289,
+          0.53565,
+          0.63184
+        ],
+        "center": [
+          -0.00122,
+          -0.00244,
+          -0.00708
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 52190
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 38075
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 10823
+        }
+      ],
+      "targetSize": 6.4,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": -0.18,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.64666,
+        "yOffset": -0.18,
+        "rotY": 0.0
+      }
+    },
+    "pine_tree": {
+      "id": "pine_tree",
+      "filename": "pine_tree.glb",
+      "file": "pine_tree.glb",
+      "url": "./models/pine_tree.glb",
+      "role": "foliage",
+      "byteSize": 315556,
+      "bytes": 315556,
+      "triangles": 3271,
+      "vertices": 6473,
+      "bbox": {
+        "min": [
+          -0.2644,
+          -0.47583,
+          -0.24829
+        ],
+        "max": [
+          0.26782,
+          0.47534,
+          0.24341
+        ],
+        "size": [
+          0.53223,
+          0.95117,
+          0.4917
+        ],
+        "center": [
+          0.00171,
+          -0.00024,
+          -0.00244
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 36098
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26966
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 3903
+        }
+      ],
+      "targetSize": 22.0,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.5,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 23.12941,
+        "yOffset": -0.5,
+        "rotY": 0.0
+      }
+    },
+    "fern_cluster": {
+      "id": "fern_cluster",
+      "filename": "fern_cluster.glb",
+      "file": "fern_cluster.glb",
+      "url": "./models/fern_cluster.glb",
+      "role": "foliage",
+      "byteSize": 239284,
+      "bytes": 239284,
+      "triangles": 2221,
+      "vertices": 3390,
+      "bbox": {
+        "min": [
+          -0.47485,
+          -0.33862,
+          -0.48267
+        ],
+        "max": [
+          0.47876,
+          0.3352,
+          0.47876
+        ],
+        "size": [
+          0.95361,
+          0.67383,
+          0.96143
+        ],
+        "center": [
+          0.00195,
+          -0.00171,
+          -0.00195
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 60512
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 27200
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 14195
+        }
+      ],
+      "targetSize": 3.4,
+      "sizeAxis": "max",
+      "pivot": "bottom",
+      "yOffset": -0.52,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 3.5364,
+        "yOffset": -0.52,
+        "rotY": 0.0
+      }
+    },
+    "river_trout": {
+      "id": "river_trout",
+      "filename": "river_trout.glb",
+      "file": "river_trout.glb",
+      "url": "./models/river_trout.glb",
+      "role": "wildlife",
+      "byteSize": 263972,
+      "bytes": 263972,
+      "triangles": 2581,
+      "vertices": 2849,
+      "bbox": {
+        "min": [
+          -0.12183,
+          -0.15454,
+          -0.47876
+        ],
+        "max": [
+          0.12183,
+          0.15356,
+          0.47485
+        ],
+        "size": [
+          0.24365,
+          0.30811,
+          0.95361
+        ],
+        "center": [
+          0.0,
+          -0.00049,
+          -0.00195
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 86835
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 28031
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 24673
+        }
+      ],
+      "targetSize": 1.85,
+      "sizeAxis": "z",
+      "pivot": "center",
+      "yOffset": 0.0,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.94,
+        "yOffset": 0.0,
+        "rotY": 0.0
+      }
+    },
+    "duckling": {
+      "id": "duckling",
+      "filename": "duckling.glb",
+      "file": "duckling.glb",
+      "url": "./models/duckling.glb",
+      "role": "wildlife",
+      "byteSize": 255988,
+      "bytes": 255988,
+      "triangles": 3582,
+      "vertices": 4642,
+      "bbox": {
+        "min": [
+          -0.54523,
+          -0.95174,
+          -0.79019
+        ],
+        "max": [
+          0.554,
+          0.94996,
+          0.78753
+        ],
+        "size": [
+          1.09923,
+          1.9017,
+          1.57772
+        ],
+        "center": [
+          0.00438,
+          -0.00089,
+          -0.00133
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 35164
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 19883
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 7108
+        }
+      ],
+      "targetSize": 0.68,
+      "sizeAxis": "z",
+      "pivot": "waterline",
+      "yOffset": -0.08,
+      "rotY": 0.06,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 0.431,
+        "yOffset": -0.08,
+        "rotY": 0.06
+      }
+    },
+    "duck_wing": {
+      "id": "duck_wing",
+      "filename": "duck_wing.glb",
+      "file": "duck_wing.glb",
+      "url": "./models/duck_wing.glb",
+      "role": "hero_part",
+      "byteSize": 44152,
+      "bytes": 44152,
+      "triangles": 472,
+      "vertices": 803,
+      "bbox": {
+        "min": [
+          0.0,
+          -0.06467,
+          -0.29592
+        ],
+        "max": [
+          1.117,
+          0.06467,
+          0.29592
+        ],
+        "size": [
+          1.117,
+          0.12933,
+          0.59183
+        ],
+        "center": [
+          0.5585,
+          0.0,
+          0.0
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 6773
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 5030
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 1936
+        }
+      ],
+      "targetSize": 0.56,
+      "sizeAxis": "max",
+      "pivot": "center",
+      "yOffset": 0.0,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 0.50134,
+        "yOffset": 0.0,
+        "rotY": 0.0
+      }
+    },
+    "torii_gate": {
+      "id": "torii_gate",
+      "filename": "torii_gate.glb",
+      "file": "torii_gate.glb",
+      "url": "./models/torii_gate.glb",
+      "role": "obstacle",
+      "region": "kyoto-sakura",
+      "byteSize": 355888,
+      "bytes": 355888,
+      "triangles": 3439,
+      "vertices": 6291,
+      "bbox": {
+        "min": [
+          -0.95069,
+          -0.81929,
+          -0.16324
+        ],
+        "max": [
+          0.9498,
+          0.81788,
+          0.16191
+        ],
+        "size": [
+          1.90049,
+          1.63717,
+          0.32515
+        ],
+        "center": [
+          -0.00045,
+          -0.00071,
+          -0.00067
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 66512
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 31657
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 12826
+        }
+      ],
+      "targetSize": 13.0,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.84034,
+        "yOffset": 0.15,
+        "rotY": 0.0
+      }
+    },
+    "sakura_tree": {
+      "id": "sakura_tree",
+      "filename": "sakura_tree.glb",
+      "file": "sakura_tree.glb",
+      "url": "./models/sakura_tree.glb",
+      "role": "foliage",
+      "region": "kyoto-sakura",
+      "byteSize": 412496,
+      "bytes": 412496,
+      "triangles": 3080,
+      "vertices": 7789,
+      "bbox": {
+        "min": [
+          -0.76964,
+          -0.9517,
+          -0.46004
+        ],
+        "max": [
+          0.7671,
+          0.9295,
+          0.46267
+        ],
+        "size": [
+          1.53674,
+          1.88121,
+          0.92271
+        ],
+        "center": [
+          -0.00127,
+          -0.0111,
+          0.00132
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 69230
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 34331
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20449
+        }
+      ],
+      "targetSize": 18.5,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 9.8341,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "bamboo_cluster": {
+      "id": "bamboo_cluster",
+      "filename": "bamboo_cluster.glb",
+      "file": "bamboo_cluster.glb",
+      "url": "./models/bamboo_cluster.glb",
+      "role": "foliage",
+      "region": "kyoto-sakura",
+      "byteSize": 279764,
+      "bytes": 279764,
+      "triangles": 2637,
+      "vertices": 6236,
+      "bbox": {
+        "min": [
+          -0.5624,
+          -0.95467,
+          -0.29348
+        ],
+        "max": [
+          0.52693,
+          0.85607,
+          0.31995
+        ],
+        "size": [
+          1.08933,
+          1.81074,
+          0.61342
+        ],
+        "center": [
+          -0.01774,
+          -0.0493,
+          0.01323
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 19536
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 24696
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 2061
+        }
+      ],
+      "targetSize": 15.0,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.35,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 8.28391,
+        "yOffset": -0.35,
+        "rotY": 0.0
+      }
+    },
+    "stone_lantern": {
+      "id": "stone_lantern",
+      "filename": "stone_lantern.glb",
+      "file": "stone_lantern.glb",
+      "url": "./models/stone_lantern.glb",
+      "role": "foliage",
+      "region": "kyoto-sakura",
+      "byteSize": 338656,
+      "bytes": 338656,
+      "triangles": 3145,
+      "vertices": 6598,
+      "bbox": {
+        "min": [
+          -0.54642,
+          -0.95165,
+          -0.54753
+        ],
+        "max": [
+          0.54441,
+          0.95083,
+          0.545
+        ],
+        "size": [
+          1.09083,
+          1.90248,
+          1.09253
+        ],
+        "center": [
+          -0.00101,
+          -0.00041,
+          -0.00127
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 50319
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 27352
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 9818
+        }
+      ],
+      "targetSize": 3.8,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.2,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.99739,
+        "yOffset": -0.2,
+        "rotY": 0.0
+      }
+    },
+    "koi_fish": {
+      "id": "koi_fish",
+      "filename": "koi_fish.glb",
+      "file": "koi_fish.glb",
+      "url": "./models/koi_fish.glb",
+      "role": "wildlife",
+      "region": "kyoto-sakura",
+      "byteSize": 307852,
+      "bytes": 307852,
+      "triangles": 2639,
+      "vertices": 3932,
+      "bbox": {
+        "min": [
+          -0.18017,
+          -0.406,
+          -0.95054
+        ],
+        "max": [
+          0.191,
+          0.40785,
+          0.95031
+        ],
+        "size": [
+          0.37117,
+          0.81384,
+          1.90085
+        ],
+        "center": [
+          0.00541,
+          0.00093,
+          -0.00011
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 99863
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20437
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 27746
+        }
+      ],
+      "targetSize": 1.95,
+      "sizeAxis": "z",
+      "pivot": "center",
+      "yOffset": 0.0,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.02586,
+        "yOffset": 0.0,
+        "rotY": 0.0
+      }
+    },
+    "jungle_palm": {
+      "id": "jungle_palm",
+      "filename": "jungle_palm.glb",
+      "file": "jungle_palm.glb",
+      "url": "./models/jungle_palm.glb",
+      "role": "foliage",
+      "region": "amazon-monsoon",
+      "byteSize": 393272,
+      "bytes": 393272,
+      "triangles": 3587,
+      "vertices": 7135,
+      "bbox": {
+        "min": [
+          -0.65579,
+          -0.95098,
+          -0.64114
+        ],
+        "max": [
+          0.66885,
+          0.94424,
+          0.6216
+        ],
+        "size": [
+          1.32465,
+          1.89522,
+          1.26275
+        ],
+        "center": [
+          0.00653,
+          -0.00337,
+          -0.00977
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 69592
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 33052
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 16956
+        }
+      ],
+      "targetSize": 21.0,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 11.08051,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "temple_ruin": {
+      "id": "temple_ruin",
+      "filename": "temple_ruin.glb",
+      "file": "temple_ruin.glb",
+      "url": "./models/temple_ruin.glb",
+      "role": "obstacle",
+      "region": "amazon-monsoon",
+      "byteSize": 341876,
+      "bytes": 341876,
+      "triangles": 3253,
+      "vertices": 7402,
+      "bbox": {
+        "min": [
+          -0.29052,
+          -0.94539,
+          -0.29759
+        ],
+        "max": [
+          0.29375,
+          0.95041,
+          0.33056
+        ],
+        "size": [
+          0.58427,
+          1.8958,
+          0.62815
+        ],
+        "center": [
+          0.00162,
+          0.00251,
+          0.01649
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 38128
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20642
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 4914
+        }
+      ],
+      "targetSize": 10.5,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 5.53856,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "giant_lily_pad": {
+      "id": "giant_lily_pad",
+      "filename": "giant_lily_pad.glb",
+      "file": "giant_lily_pad.glb",
+      "url": "./models/giant_lily_pad.glb",
+      "role": "obstacle",
+      "region": "amazon-monsoon",
+      "byteSize": 317704,
+      "bytes": 317704,
+      "triangles": 2827,
+      "vertices": 4821,
+      "bbox": {
+        "min": [
+          -0.95068,
+          -0.20268,
+          -0.9497
+        ],
+        "max": [
+          0.94784,
+          0.21289,
+          0.94585
+        ],
+        "size": [
+          1.89852,
+          0.41557,
+          1.89555
+        ],
+        "center": [
+          -0.00142,
+          0.00511,
+          -0.00193
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 77645
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 29500
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20082
+        }
+      ],
+      "targetSize": 3.6,
+      "sizeAxis": "max",
+      "pivot": "waterline",
+      "yOffset": 0.04,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.89621,
+        "yOffset": 0.04,
+        "rotY": 0.0
+      }
+    },
+    "red_rock_pillar": {
+      "id": "red_rock_pillar",
+      "filename": "red_rock_pillar.glb",
+      "file": "red_rock_pillar.glb",
+      "url": "./models/red_rock_pillar.glb",
+      "role": "obstacle",
+      "region": "red-canyon",
+      "byteSize": 335432,
+      "bytes": 335432,
+      "triangles": 3704,
+      "vertices": 7712,
+      "bbox": {
+        "min": [
+          -0.73678,
+          -0.95146,
+          -0.88238
+        ],
+        "max": [
+          0.69876,
+          0.94531,
+          0.88238
+        ],
+        "size": [
+          1.43555,
+          1.89677,
+          1.76476
+        ],
+        "center": [
+          -0.01901,
+          -0.00307,
+          -0.0
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 28860
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 9894
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 3154
+        }
+      ],
+      "targetSize": 5.8,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 3.05783,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "red_rock_arch": {
+      "id": "red_rock_arch",
+      "filename": "red_rock_arch.glb",
+      "file": "red_rock_arch.glb",
+      "url": "./models/red_rock_arch.glb",
+      "role": "obstacle",
+      "region": "red-canyon",
+      "byteSize": 317480,
+      "bytes": 317480,
+      "triangles": 4055,
+      "vertices": 6986,
+      "bbox": {
+        "min": [
+          -0.95079,
+          -0.54697,
+          -0.46346
+        ],
+        "max": [
+          0.94949,
+          0.55112,
+          0.46739
+        ],
+        "size": [
+          1.90029,
+          1.09809,
+          0.93085
+        ],
+        "center": [
+          -0.00065,
+          0.00207,
+          0.00197
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 22583
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 17543
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 2832
+        }
+      ],
+      "targetSize": 12.8,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.73581,
+        "yOffset": 0.15,
+        "rotY": 0.0
+      }
+    },
+    "saguaro_cactus": {
+      "id": "saguaro_cactus",
+      "filename": "saguaro_cactus.glb",
+      "file": "saguaro_cactus.glb",
+      "url": "./models/saguaro_cactus.glb",
+      "role": "foliage",
+      "region": "red-canyon",
+      "byteSize": 325868,
+      "bytes": 325868,
+      "triangles": 2842,
+      "vertices": 6517,
+      "bbox": {
+        "min": [
+          -0.43214,
+          -0.95363,
+          -0.15676
+        ],
+        "max": [
+          0.43704,
+          0.93525,
+          0.15383
+        ],
+        "size": [
+          0.86919,
+          1.88889,
+          0.31059
+        ],
+        "center": [
+          0.00245,
+          -0.00919,
+          -0.00146
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 47841
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26516
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 6551
+        }
+      ],
+      "targetSize": 11.0,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.35,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 5.82353,
+        "yOffset": -0.35,
+        "rotY": 0.0
+      }
+    },
+    "iceberg_spire": {
+      "id": "iceberg_spire",
+      "filename": "iceberg_spire.glb",
+      "file": "iceberg_spire.glb",
+      "url": "./models/iceberg_spire.glb",
+      "role": "obstacle",
+      "region": "arctic-fjord",
+      "byteSize": 308696,
+      "bytes": 308696,
+      "triangles": 3606,
+      "vertices": 5884,
+      "bbox": {
+        "min": [
+          -0.57085,
+          -0.60838,
+          -0.95169
+        ],
+        "max": [
+          0.5686,
+          0.60721,
+          0.95037
+        ],
+        "size": [
+          1.13945,
+          1.21559,
+          1.90206
+        ],
+        "center": [
+          -0.00113,
+          -0.00058,
+          -0.00066
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 40615
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 29786
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 4438
+        }
+      ],
+      "targetSize": 5.4,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.5,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 4.44229,
+        "yOffset": -0.5,
+        "rotY": 0.0
+      }
+    },
+    "ice_arch": {
+      "id": "ice_arch",
+      "filename": "ice_arch.glb",
+      "file": "ice_arch.glb",
+      "url": "./models/ice_arch.glb",
+      "role": "obstacle",
+      "region": "arctic-fjord",
+      "byteSize": 377836,
+      "bytes": 377836,
+      "triangles": 4151,
+      "vertices": 7937,
+      "bbox": {
+        "min": [
+          -0.95078,
+          -0.42046,
+          -0.47999
+        ],
+        "max": [
+          0.9516,
+          0.41945,
+          0.47802
+        ],
+        "size": [
+          1.90238,
+          0.8399,
+          0.958
+        ],
+        "center": [
+          0.00041,
+          -0.00051,
+          -0.00099
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 50004
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 13382
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 8357
+        }
+      ],
+      "targetSize": 12.4,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.51815,
+        "yOffset": 0.15,
+        "rotY": 0.0
+      }
+    },
+    "penguin": {
+      "id": "penguin",
+      "filename": "penguin.glb",
+      "file": "penguin.glb",
+      "url": "./models/penguin.glb",
+      "role": "wildlife",
+      "region": "arctic-fjord",
+      "byteSize": 294016,
+      "bytes": 294016,
+      "triangles": 3294,
+      "vertices": 4141,
+      "bbox": {
+        "min": [
+          -0.53615,
+          -0.95173,
+          -0.7164
+        ],
+        "max": [
+          0.53586,
+          0.95039,
+          0.68193
+        ],
+        "size": [
+          1.07201,
+          1.90212,
+          1.39833
+        ],
+        "center": [
+          -0.00014,
+          -0.00067,
+          -0.01724
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 71572
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 21644
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 26454
+        }
+      ],
+      "targetSize": 1.15,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.05,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 0.60459,
+        "yOffset": -0.05,
+        "rotY": 0.0
+      }
+    },
+    "basalt_columns": {
+      "id": "basalt_columns",
+      "filename": "basalt_columns.glb",
+      "file": "basalt_columns.glb",
+      "url": "./models/basalt_columns.glb",
+      "role": "obstacle",
+      "region": "volcanic-gorge",
+      "byteSize": 298920,
+      "bytes": 298920,
+      "triangles": 3680,
+      "vertices": 6795,
+      "bbox": {
+        "min": [
+          -0.88632,
+          -0.57635,
+          -0.94589
+        ],
+        "max": [
+          0.88469,
+          0.57242,
+          0.94937
+        ],
+        "size": [
+          1.771,
+          1.14877,
+          1.89526
+        ],
+        "center": [
+          -0.00081,
+          -0.00196,
+          0.00174
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 18319
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 13529
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 3180
+        }
+      ],
+      "targetSize": 6.4,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 5.57118,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "obsidian_arch": {
+      "id": "obsidian_arch",
+      "filename": "obsidian_arch.glb",
+      "file": "obsidian_arch.glb",
+      "url": "./models/obsidian_arch.glb",
+      "role": "obstacle",
+      "region": "volcanic-gorge",
+      "byteSize": 360096,
+      "bytes": 360096,
+      "triangles": 4155,
+      "vertices": 7216,
+      "bbox": {
+        "min": [
+          -0.94981,
+          -0.435,
+          -0.39513
+        ],
+        "max": [
+          0.95024,
+          0.42623,
+          0.39047
+        ],
+        "size": [
+          1.90005,
+          0.86123,
+          0.7856
+        ],
+        "center": [
+          0.00021,
+          -0.00438,
+          -0.00233
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 33260
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 36790
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 6981
+        }
+      ],
+      "targetSize": 12.4,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.52614,
+        "yOffset": 0.15,
+        "rotY": 0.0
+      }
+    },
+    "lava_rock": {
+      "id": "lava_rock",
+      "filename": "lava_rock.glb",
+      "file": "lava_rock.glb",
+      "url": "./models/lava_rock.glb",
+      "role": "obstacle",
+      "region": "volcanic-gorge",
+      "byteSize": 347068,
+      "bytes": 347068,
+      "triangles": 3738,
+      "vertices": 6342,
+      "bbox": {
+        "min": [
+          -0.95196,
+          -0.81003,
+          -0.73196
+        ],
+        "max": [
+          0.95113,
+          0.8075,
+          0.72924
+        ],
+        "size": [
+          1.90309,
+          1.61752,
+          1.46119
+        ],
+        "center": [
+          -0.00041,
+          -0.00127,
+          -0.00136
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 58515
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 25977
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 12468
+        }
+      ],
+      "targetSize": 4.0,
+      "sizeAxis": "max",
+      "pivot": "bottom",
+      "yOffset": -0.35,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.10184,
+        "yOffset": -0.35,
+        "rotY": 0.0
+      }
+    },
+    "beaver_dam": {
+      "id": "beaver_dam",
+      "filename": "beaver_dam.glb",
+      "file": "beaver_dam.glb",
+      "url": "./models/beaver_dam.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 391580,
+      "bytes": 391580,
+      "triangles": 3685,
+      "vertices": 8568,
+      "bbox": {
+        "min": [
+          -0.94962,
+          -0.53537,
+          -0.63395
+        ],
+        "max": [
+          0.94737,
+          0.5396,
+          0.63511
+        ],
+        "size": [
+          1.89699,
+          1.07497,
+          1.26906
+        ],
+        "center": [
+          -0.00113,
+          0.00212,
+          0.00058
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 40576
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20491
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 9806
+        }
+      ],
+      "targetSize": 7.2,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": -0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 3.79549,
+        "yOffset": -0.15,
+        "rotY": 0.0
+      }
+    },
+    "stone_footbridge": {
+      "id": "stone_footbridge",
+      "filename": "stone_footbridge.glb",
+      "file": "stone_footbridge.glb",
+      "url": "./models/stone_footbridge.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 343940,
+      "bytes": 343940,
+      "triangles": 4061,
+      "vertices": 5989,
+      "bbox": {
+        "min": [
+          -0.9507,
+          -0.5115,
+          -0.73685
+        ],
+        "max": [
+          0.95077,
+          0.50634,
+          0.7378
+        ],
+        "size": [
+          1.90147,
+          1.01783,
+          1.47465
+        ],
+        "center": [
+          4e-05,
+          -0.00258,
+          0.00048
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 61607
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 27841
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 11804
+        }
+      ],
+      "targetSize": 12.2,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.15,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.41609,
+        "yOffset": 0.15,
+        "rotY": 0.0
+      }
+    },
+    "sunken_canoe": {
+      "id": "sunken_canoe",
+      "filename": "sunken_canoe.glb",
+      "file": "sunken_canoe.glb",
+      "url": "./models/sunken_canoe.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 402508,
+      "bytes": 402508,
+      "triangles": 3671,
+      "vertices": 7127,
+      "bbox": {
+        "min": [
+          -0.61337,
+          -0.34039,
+          -0.95186
+        ],
+        "max": [
+          0.61301,
+          0.33639,
+          0.95169
+        ],
+        "size": [
+          1.22638,
+          0.67678,
+          1.90355
+        ],
+        "center": [
+          -0.00018,
+          -0.002,
+          -9e-05
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 71121
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 42530
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 14426
+        }
+      ],
+      "targetSize": 4.8,
+      "sizeAxis": "max",
+      "pivot": "bottom",
+      "yOffset": -0.35,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.5216,
+        "yOffset": -0.35,
+        "rotY": 0.0
+      }
+    },
+    "willow_overhang": {
+      "id": "willow_overhang",
+      "filename": "willow_overhang.glb",
+      "file": "willow_overhang.glb",
+      "url": "./models/willow_overhang.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 407632,
+      "bytes": 407632,
+      "triangles": 3639,
+      "vertices": 8712,
+      "bbox": {
+        "min": [
+          -0.95168,
+          -0.54935,
+          -0.30525
+        ],
+        "max": [
+          0.95172,
+          0.54056,
+          0.33422
+        ],
+        "size": [
+          1.90339,
+          1.08991,
+          0.63946
+        ],
+        "center": [
+          2e-05,
+          -0.0044,
+          0.01449
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 52306
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 21542
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 9052
+        }
+      ],
+      "targetSize": 11.8,
+      "sizeAxis": "x",
+      "pivot": "center",
+      "yOffset": 0.22,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 6.19947,
+        "yOffset": 0.22,
+        "rotY": 0.0
+      }
+    },
+    "river_snag_stump": {
+      "id": "river_snag_stump",
+      "filename": "river_snag_stump.glb",
+      "file": "river_snag_stump.glb",
+      "url": "./models/river_snag_stump.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 361840,
+      "bytes": 361840,
+      "triangles": 3727,
+      "vertices": 7084,
+      "bbox": {
+        "min": [
+          -0.49963,
+          -0.95181,
+          -0.53557
+        ],
+        "max": [
+          0.51023,
+          0.94788,
+          0.53399
+        ],
+        "size": [
+          1.00986,
+          1.89969,
+          1.06955
+        ],
+        "center": [
+          0.0053,
+          -0.00196,
+          -0.00079
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 55779
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20624
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 11731
+        }
+      ],
+      "targetSize": 4.4,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.4,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.31617,
+        "yOffset": -0.4,
+        "rotY": 0.0
+      }
+    },
+    "floating_barrel": {
+      "id": "floating_barrel",
+      "filename": "floating_barrel.glb",
+      "file": "floating_barrel.glb",
+      "url": "./models/floating_barrel.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 292360,
+      "bytes": 292360,
+      "triangles": 2722,
+      "vertices": 4935,
+      "bbox": {
+        "min": [
+          -0.95158,
+          -0.89807,
+          -0.9482
+        ],
+        "max": [
+          0.94972,
+          0.88049,
+          0.94698
+        ],
+        "size": [
+          1.9013,
+          1.77857,
+          1.89518
+        ],
+        "center": [
+          -0.00093,
+          -0.00879,
+          -0.00061
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 43832
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 50110
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 5546
+        }
+      ],
+      "targetSize": 2.3,
+      "sizeAxis": "y",
+      "pivot": "waterline",
+      "yOffset": -0.18,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 1.29317,
+        "yOffset": -0.18,
+        "rotY": 0.0
+      }
+    },
+    "cattail_reeds": {
+      "id": "cattail_reeds",
+      "filename": "cattail_reeds.glb",
+      "file": "cattail_reeds.glb",
+      "url": "./models/cattail_reeds.glb",
+      "role": "foliage",
+      "region": "shared",
+      "byteSize": 279272,
+      "bytes": 279272,
+      "triangles": 2250,
+      "vertices": 5937,
+      "bbox": {
+        "min": [
+          -0.90181,
+          -0.81347,
+          -0.89609
+        ],
+        "max": [
+          0.94876,
+          0.69299,
+          0.91318
+        ],
+        "size": [
+          1.85057,
+          1.50646,
+          1.80928
+        ],
+        "center": [
+          0.02347,
+          -0.06024,
+          0.00855
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 31641
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 16275
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 12084
+        }
+      ],
+      "targetSize": 3.8,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.25,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.52247,
+        "yOffset": -0.25,
+        "rotY": 0.0
+      }
+    },
+    "mossy_step_stones": {
+      "id": "mossy_step_stones",
+      "filename": "mossy_step_stones.glb",
+      "file": "mossy_step_stones.glb",
+      "url": "./models/mossy_step_stones.glb",
+      "role": "obstacle",
+      "region": "shared",
+      "byteSize": 321700,
+      "bytes": 321700,
+      "triangles": 3558,
+      "vertices": 4930,
+      "bbox": {
+        "min": [
+          -1.11117,
+          -0.12211,
+          -0.86509
+        ],
+        "max": [
+          1.1066,
+          0.12013,
+          0.70981
+        ],
+        "size": [
+          2.21777,
+          0.24224,
+          1.5749
+        ],
+        "center": [
+          -0.00229,
+          -0.00099,
+          -0.07764
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 71601
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 27930
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 19404
+        }
+      ],
+      "targetSize": 5.8,
+      "sizeAxis": "x",
+      "pivot": "bottom",
+      "yOffset": -0.22,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.61524,
+        "yOffset": -0.22,
+        "rotY": 0.0
+      }
+    },
+    "waterwheel_mill": {
+      "id": "waterwheel_mill",
+      "filename": "waterwheel_mill.glb",
+      "file": "waterwheel_mill.glb",
+      "url": "./models/waterwheel_mill.glb",
+      "role": "foliage",
+      "region": "shared",
+      "byteSize": 381348,
+      "bytes": 381348,
+      "triangles": 3992,
+      "vertices": 8664,
+      "bbox": {
+        "min": [
+          -0.92143,
+          -0.95089,
+          -0.83932
+        ],
+        "max": [
+          0.92143,
+          0.95075,
+          0.84333
+        ],
+        "size": [
+          1.84286,
+          1.90164,
+          1.68264
+        ],
+        "center": [
+          0.0,
+          -7e-05,
+          0.00201
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 31658
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 19666
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 2564
+        }
+      ],
+      "targetSize": 8.5,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.45,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 4.46983,
+        "yOffset": -0.45,
+        "rotY": 0.0
+      }
+    },
+    "crystal_cluster": {
+      "id": "crystal_cluster",
+      "filename": "crystal_cluster.glb",
+      "file": "crystal_cluster.glb",
+      "url": "./models/crystal_cluster.glb",
+      "role": "foliage",
+      "region": "shared",
+      "byteSize": 398920,
+      "bytes": 398920,
+      "triangles": 2938,
+      "vertices": 6680,
+      "bbox": {
+        "min": [
+          -0.95093,
+          -0.68357,
+          -0.92205
+        ],
+        "max": [
+          0.94792,
+          0.66579,
+          0.92888
+        ],
+        "size": [
+          1.89884,
+          1.34936,
+          1.85093
+        ],
+        "center": [
+          -0.0015,
+          -0.00889,
+          0.00342
+        ]
+      },
+      "pbrChannels": [
+        "baseColor",
+        "metallicRoughness",
+        "normal"
+      ],
+      "textures": [
+        {
+          "index": 0,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 67744
+        },
+        {
+          "index": 1,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 59217
+        },
+        {
+          "index": 2,
+          "mimeType": "image/jpeg",
+          "width": 512,
+          "height": 512,
+          "bytes": 20654
+        }
+      ],
+      "targetSize": 3.4,
+      "sizeAxis": "y",
+      "pivot": "bottom",
+      "yOffset": -0.25,
+      "rotY": 0.0,
+      "scaleMultiplier": 1.0,
+      "recommended": {
+        "scale": 2.51971,
+        "yOffset": -0.25,
+        "rotY": 0.0
+      }
+    }
+  }
+}
